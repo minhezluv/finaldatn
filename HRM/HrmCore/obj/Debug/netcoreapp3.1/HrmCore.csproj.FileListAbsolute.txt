@@ -1,0 +1,10 @@
+E:\20221\datn\HRM\HrmCore\bin\Debug\netcoreapp3.1\HrmCore.deps.json
+E:\20221\datn\HRM\HrmCore\bin\Debug\netcoreapp3.1\HrmCore.dll
+E:\20221\datn\HRM\HrmCore\bin\Debug\netcoreapp3.1\HrmCore.pdb
+E:\20221\datn\HRM\HrmCore\obj\Debug\netcoreapp3.1\HrmCore.csproj.AssemblyReference.cache
+E:\20221\datn\HRM\HrmCore\obj\Debug\netcoreapp3.1\HrmCore.GeneratedMSBuildEditorConfig.editorconfig
+E:\20221\datn\HRM\HrmCore\obj\Debug\netcoreapp3.1\HrmCore.AssemblyInfoInputs.cache
+E:\20221\datn\HRM\HrmCore\obj\Debug\netcoreapp3.1\HrmCore.AssemblyInfo.cs
+E:\20221\datn\HRM\HrmCore\obj\Debug\netcoreapp3.1\HrmCore.csproj.CoreCompileInputs.cache
+E:\20221\datn\HRM\HrmCore\obj\Debug\netcoreapp3.1\HrmCore.dll
+E:\20221\datn\HRM\HrmCore\obj\Debug\netcoreapp3.1\HrmCore.pdb

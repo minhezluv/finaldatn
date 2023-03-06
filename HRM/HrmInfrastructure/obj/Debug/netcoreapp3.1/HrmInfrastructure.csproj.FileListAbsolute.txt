@@ -1,0 +1,13 @@
+E:\20221\datn\HRM\HrmInfrastructure\obj\Debug\netcoreapp3.1\HrmInfrastructure.csproj.AssemblyReference.cache
+E:\20221\datn\HRM\HrmInfrastructure\obj\Debug\netcoreapp3.1\HrmInfrastructure.GeneratedMSBuildEditorConfig.editorconfig
+E:\20221\datn\HRM\HrmInfrastructure\obj\Debug\netcoreapp3.1\HrmInfrastructure.AssemblyInfoInputs.cache
+E:\20221\datn\HRM\HrmInfrastructure\obj\Debug\netcoreapp3.1\HrmInfrastructure.AssemblyInfo.cs
+E:\20221\datn\HRM\HrmInfrastructure\obj\Debug\netcoreapp3.1\HrmInfrastructure.csproj.CoreCompileInputs.cache
+E:\20221\datn\HRM\HrmInfrastructure\bin\Debug\netcoreapp3.1\HrmInfrastructure.deps.json
+E:\20221\datn\HRM\HrmInfrastructure\bin\Debug\netcoreapp3.1\HrmInfrastructure.dll
+E:\20221\datn\HRM\HrmInfrastructure\bin\Debug\netcoreapp3.1\HrmInfrastructure.pdb
+E:\20221\datn\HRM\HrmInfrastructure\bin\Debug\netcoreapp3.1\HrmCore.dll
+E:\20221\datn\HRM\HrmInfrastructure\bin\Debug\netcoreapp3.1\HrmCore.pdb
+E:\20221\datn\HRM\HrmInfrastructure\obj\Debug\netcoreapp3.1\HrmInfrastructure.csproj.CopyComplete
+E:\20221\datn\HRM\HrmInfrastructure\obj\Debug\netcoreapp3.1\HrmInfrastructure.dll
+E:\20221\datn\HRM\HrmInfrastructure\obj\Debug\netcoreapp3.1\HrmInfrastructure.pdb

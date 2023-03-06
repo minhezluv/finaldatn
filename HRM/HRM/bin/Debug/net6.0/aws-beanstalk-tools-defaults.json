@@ -1,0 +1,20 @@
+
+{
+    "region" : "ap-southeast-1",
+    "configuration" : "Debug",
+    "framework"     : "net5.0",
+    "self-contained" : false,
+    "application"    : "HRM",
+    "environment"    : "HRM-dev",
+    "enable-xray"    : false,
+    "enhanced-health-type" : "basic",
+    "additional-options"   : "\"aws:autoscaling:launchconfiguration,SecurityGroups\"=\"sg-01aca2308a90b3e75\";\"aws:ec2:vpc,Subnets\"=\"subnet-09d7c53102ca73a69\"",
+    "solution-stack"       : "64bit Amazon Linux 2 v2.5.0 running .NET Core",
+    "environment-type"     : "SingleInstance",
+    "cname"                : "hrm-dev",
+    "instance-type"        : "t3a.medium",
+    "key-pair"             : "MINHNQ_Keypair",
+    "instance-profile"     : "aws-elasticbeanstalk-ec2-role",
+    "service-role"         : "aws-elasticbeanstalk-service-role",
+    "proxy-server"         : "nginx"
+}
