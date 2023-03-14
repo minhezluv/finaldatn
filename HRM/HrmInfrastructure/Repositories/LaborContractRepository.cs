@@ -17,6 +17,21 @@ namespace HrmInfrastructure.Repositories
         public LaborContractRepository(IConfiguration config) : base(config)
         { }
 
+        public int activeStaff(Guid staffID)
+        {
+            string sqlCmd = $"SELECT * FROM {tableName} WHERE StaffID = @guid AND status = 2";
+            var dparams = new DynamicParameters();
+            dparams.Add($"@guid", staffID.ToString());
+            LaborContract res = conn.QueryFirstOrDefault<LaborContract>(sqlCmd, dparams);
+            if (res == null)
+            {
+                return -1;
+            }
+            conn.Close();
+            return 1;
+            throw new NotImplementedException();
+        }
+
         public bool CheckLCCodeExists(string lcCode, string lcID)
         {
             DynamicParameters dynamicParameters = new DynamicParameters();
@@ -41,8 +56,8 @@ namespace HrmInfrastructure.Repositories
             parameters.Add("@PageIndex", pageIndex);
             parameters.Add("@DepartmentID", departmentID == "" ? null : departmentID);
             parameters.Add("@PositionID", positionID == "" ? null : positionID);
-            parameters.Add("@Status", Status);
-            parameters.Add("@TypeLaborContractID", TypeLaborContractID );
+            parameters.Add("@Status", Status == 0 ? null : Status);
+            parameters.Add("@TypeLaborContractID", TypeLaborContractID == 0 ? null:TypeLaborContractID);
             parameters.Add("@TotalRecord", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
             using (IDbConnection dbConnection = new MySqlConnection(connString))
@@ -62,8 +77,8 @@ namespace HrmInfrastructure.Repositories
             parameters.Add("@PageIndex", pageIndex);
             parameters.Add("@DepartmentID", departmentID == "" ? null : departmentID);
             parameters.Add("@PositionID", positionID == "" ? null : positionID);
-            parameters.Add("@Status", Status);
-            parameters.Add("@TypeLaborContractID", TypeLaborContractID );
+            parameters.Add("@Status", Status == 0 ? null : Status);
+            parameters.Add("@TypeLaborContractID", TypeLaborContractID == 0 ? null : TypeLaborContractID);
             parameters.Add("@TotalRecord", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
             using (IDbConnection dbConnection = new MySqlConnection(connString))
@@ -96,20 +111,37 @@ namespace HrmInfrastructure.Repositories
             }
             //Insert
 
-
+            _dbConnection.Close();
             return cnt;
         }
 
         public int InsertLC(LaborContract LC)
         {
             int rowAffects = 0;
-            int cnt = 0;
+           // int cnt = 0;
+            //try
+            //{
+            //    rowAffects = _dbConnection.Execute($"Proc_InsertLC", LC, commandType: CommandType.StoredProcedure);
+            //    Account account = _dbConnection.QueryFirstOrDefault<Account>("Proc_GetAccount", commandType: CommandType.StoredProcedure);
+            //    Guid guid = new Guid("36104b10-705b-57a8-83c0-08fd2f807219");
+            //    if (LC.guid == guid)
+            //    {
+            //        account.RoleID = "2";
+            //        rowAffects = _dbConnection.Execute($"Proc_InsertAccount", account, commandType: CommandType.StoredProcedure);
+            //    }
+            //    cnt++;
+            //}
+            //catch (Exception e)
+            //{
+
+            //    throw;
+            //}
 
             rowAffects = _dbConnection.Execute($"Proc_InsertLC", LC, commandType: CommandType.StoredProcedure);
-            cnt++;
+         
 
             //Insert
-
+            _dbConnection.Close();
 
             return rowAffects;
         }

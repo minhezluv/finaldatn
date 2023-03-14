@@ -9,7 +9,7 @@ namespace HrmCore.Entities
     public class Tax
     {
         #region props
-        public Guid guid { get; set; } = Guid.NewGuid();
+        public Guid Guid { get; set; } = Guid.NewGuid();
 
         public string TaxCode { get; set; }
         public float From { get; set; }

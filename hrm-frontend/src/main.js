@@ -6,7 +6,9 @@ import "../src/assets/css/scss/app.scss";
 Vue.use(Antd);
 import Vue from "vue";
 import App from "./App.vue";
-import router from "./router";
+//import MainApp from "./MainApp.vue";
+//import mainRouter from "./router/index";
+import router from "./router/publicIndex";
 import Bus from "./EventBus";
 import vueDebounce from "vue-debounce";
 import "devextreme/dist/css/dx.light.css";
@@ -52,8 +54,18 @@ Vue.component("FieldInputLabel", FieldInputLabel);
 Vue.component("ComboBox", ComboBox);
 Vue.component("Dropdown", Dropdown);
 
+// new Vue({
+//   store: store,
+//   router,
+//   render: (h) => h(MainApp),
+// }).$mount("#app2");
 new Vue({
   store: store,
   router,
   render: (h) => h(App),
 }).$mount("#app");
+// new Vue({
+//   store: store,
+//   router: mainRouter,
+//   render: (h) => h(MainApp),
+// }).$mount("#app2");

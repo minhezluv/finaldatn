@@ -45,7 +45,7 @@ namespace HrmInfrastructure.Repositories
             parameters.Add("@DepartmentID", departmentID == "" ? null : departmentID);
             parameters.Add("@PositionID", positionID == "" ? null : positionID);
             parameters.Add("@TotalRecord", dbType: DbType.Int32, direction: ParameterDirection.Output);
-            parameters.Add("@Status", status == 0 ? null : status);
+            parameters.Add("@Status", status == 0 ? null: status);
 
             using (IDbConnection dbConnection = new MySqlConnection(connString))
             {
@@ -89,7 +89,7 @@ namespace HrmInfrastructure.Repositories
             parameters.Add("@DepartmentID", departmentID == "" ? null : departmentID);
             parameters.Add("@PositionID", positionID == "" ? null : positionID);
             parameters.Add("@TotalRecord", dbType: DbType.Int32, direction: ParameterDirection.Output);
-            parameters.Add("@Status", status );
+            parameters.Add("@Status", status == 0 ? null : status);
             using (IDbConnection dbConnection = new MySqlConnection(connString))
             {
                 var staffs = dbConnection.Query<FullStaff>("Proc_GetStaffFilterPaging", param: parameters, commandType: CommandType.StoredProcedure);
@@ -119,7 +119,7 @@ namespace HrmInfrastructure.Repositories
                 cnt++;
             }
             //Insert
-           
+           _dbConnection.Close();
 
             return cnt;
         }
@@ -128,10 +128,28 @@ namespace HrmInfrastructure.Repositories
         {
             int rowAffects = 0;
             int cnt = 0;
-     
+            try
+            {
+               
+              //  staff.guid = new Guid();
+
                 rowAffects = _dbConnection.Execute($"Proc_Insert{tableName}", staff, commandType: CommandType.StoredProcedure);
+                //Account account = new Account();
+                //account.Username = staff.StaffCode;
+                //account.Password = staff.PhoneNumber;
+                //account.RoleID = "1";
+                //account.StaffID = staff.guid;
+              //  rowAffects = _dbConnection.Execute($"Proc_InsertAccount", account, commandType: CommandType.StoredProcedure);
+
                 cnt++;
-            
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
+            _dbConnection.Close();
             //Insert
 
 

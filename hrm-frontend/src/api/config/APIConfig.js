@@ -1,6 +1,7 @@
 var APIConfig = {
-  development: "https://localhost:44384/",
-  production: "http://localhost:8080/",
+  development: "http://hrm3-env.eba-qghius76.ap-southeast-1.elasticbeanstalk.com/",
+  production:
+    "http://hrm3-env.eba-qghius76.ap-southeast-1.elasticbeanstalk.com/",
 };
 
 export default APIConfig[process.env.NODE_ENV];

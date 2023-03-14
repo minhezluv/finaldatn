@@ -24,16 +24,16 @@ class TimeKeepingsAPI extends BaseAPI {
     month,
     day
   ) {
-    if (departmentID == undefined || departmentID == 1) {
-      departmentID = " ";
+    if (departmentID == undefined || departmentID == 0) {
+      departmentID = "";
     }
     if (positionID == undefined || positionID == "0") {
-      positionID = " ";
+      positionID = "";
     }
     if (filterValue == undefined || filterValue == null) {
       filterValue = "";
     }
-    if (year == undefined || month == "0") {
+    if (year == undefined || year == "0") {
       year = "0";
     }
     if (month == undefined || month == "0") {
@@ -95,6 +95,25 @@ class TimeKeepingsAPI extends BaseAPI {
   getByWeekOption(year, week) {
     let queryString = `${this.controller}/GetByWeekOption?year=${year}&week=${week}`;
 
+    return BaseAPIConfig.get(`${queryString}`);
+  }
+  getByMonthOption(year, month, departmentID, positionID, staffCode) {
+    if (departmentID == undefined || departmentID == 1) {
+      departmentID = "";
+    }
+    if (positionID == undefined || positionID == 1) {
+      positionID = "";
+    }
+    if (year == undefined || year == "0") {
+      year = "0";
+    }
+    if (month == undefined || month == "0") {
+      month = "0";
+    }
+    if (staffCode == undefined || staffCode == null) {
+      staffCode = "";
+    }
+    let queryString = `${this.controller}/GetByMonthOption?year=${year}&month=${month}&departmentID=${departmentID}&positionID=${positionID}&staffCode=${staffCode}`;
     return BaseAPIConfig.get(`${queryString}`);
   }
 

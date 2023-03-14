@@ -18,6 +18,8 @@ namespace HrmCore.Interfaces.IRepositories
         public List<FullTimeKeeping> GetByMonth(Guid guid);
         public DateTime GetMonth(Guid guid);
         public Guid getIDbyStaffCode(string staffCode);
+
+        public List<FullTimeKeeping> GetByMonthOption(int year, int month, string departmentID, string positionID, string staffID);
         #endregion
     }
 }

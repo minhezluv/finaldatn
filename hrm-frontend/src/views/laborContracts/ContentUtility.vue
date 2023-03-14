@@ -125,7 +125,7 @@ export default {
         height: 32,
         width: 150,
         displayValues: ["Tất cả trạng thái", "Đang làm việc", "Nghỉ việc"],
-        keys: ["0", "1", "2"],
+        keys: ["0", "2", "1"],
         // labelText: "Select an item",
         //defaultValue: this.$parent.defaultValue, // use default value from grandparent
         defaultValue: "Tất cả trạng thái",

@@ -12,6 +12,7 @@ E:\20221\ĐATN\HRM\HrmCore\obj\Debug\net5.0\ref\HrmCore.dll
 E:\20221\ĐATN\HRM\HrmCore\obj\Debug\net5.0\HrmCore.pdb
 E:\20221\datn\HRM\HrmCore\bin\Debug\net5.0\HrmCore.deps.json
 E:\20221\datn\HRM\HrmCore\bin\Debug\net5.0\HrmCore.dll
+E:\20221\datn\HRM\HrmCore\bin\Debug\net5.0\ref\HrmCore.dll
 E:\20221\datn\HRM\HrmCore\bin\Debug\net5.0\HrmCore.pdb
 E:\20221\datn\HRM\HrmCore\obj\Debug\net5.0\HrmCore.csproj.AssemblyReference.cache
 E:\20221\datn\HRM\HrmCore\obj\Debug\net5.0\HrmCore.GeneratedMSBuildEditorConfig.editorconfig
@@ -21,4 +22,3 @@ E:\20221\datn\HRM\HrmCore\obj\Debug\net5.0\HrmCore.csproj.CoreCompileInputs.cach
 E:\20221\datn\HRM\HrmCore\obj\Debug\net5.0\HrmCore.dll
 E:\20221\datn\HRM\HrmCore\obj\Debug\net5.0\ref\HrmCore.dll
 E:\20221\datn\HRM\HrmCore\obj\Debug\net5.0\HrmCore.pdb
-E:\20221\datn\HRM\HrmCore\obj\Debug\net5.0\refint\HrmCore.dll

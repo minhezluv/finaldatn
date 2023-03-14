@@ -66,7 +66,7 @@ namespace HrmCore.Services
             int dayoff = 0;
             int Late = 0;
             int Early = 0;
-            //int rest = 0;
+            int rest = 0;
 
           
             for (int i =0; i < sizeMonth; i++)
@@ -105,8 +105,9 @@ namespace HrmCore.Services
             //dayoff =sizeMonth - Early - Late;
             if (currMonth == Date.Month)
             {
+                int currDay = now.Day;
                // dayoff = Date.Day - Early - Late;
-                for(int i =0; i < Date.Day; i++)
+                for(int i =0; i < currDay; i++)
                 {
                     if (times[i] == 0)
                     {
@@ -144,6 +145,117 @@ namespace HrmCore.Services
             throw new NotImplementedException();
         }
 
+        public ServiceResult GetByMonthOption(int year, int month, string departmentID, string positionID, string staffID)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            List<FullTimeKeeping> FullTk = null;
+            FullTk = JobRepository.GetByMonthOption(year, month, departmentID, positionID, staffID);
+            int sizeMonth = DateTime.DaysInMonth(year, month);
+            DateTime now = DateTime.Now;
+            int currMonth = now.Month;
+            int[] times = new int[sizeMonth];
+            int dayoff = 0;
+            int Late = 0;
+            int Early = 0;
+            int rest = 0;
+            int[] Nb0fWork = new int[sizeMonth];
+            //rest
+            for (int i = 0; i < sizeMonth; i++)
+            {
+                DateTime tempDate = new DateTime(year, month, i + 1);
+                if (tempDate.DayOfWeek == DayOfWeek.Saturday || tempDate.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    times[i] = 3;
+
+                }
+            }
+            //working
+
+            foreach (FullTimeKeeping tk in FullTk)
+            {
+
+                var day = tk.Start;
+
+                if(staffID != null)
+                {
+                    if (day.Month > 0 && times[day.Day - 1] == 0 || times[day.Day - 1] == 3)
+                    {
+                        //  Date = day;
+                        if (day.Hour <= 8)
+                        {
+                            times[day.Day - 1] = 2;
+                            Early++;
+                        }
+                        else
+                        {
+                            times[day.Day - 1] = 1;
+                            Late++;
+                        };
+                    }
+                }
+                else
+                {
+                    if (day.Month > 0)
+                    {
+                        //  Date = day;
+
+                        if (day.Hour <= 8)
+                        {
+                            times[day.Day - 1] = 2;
+                            Early++;
+
+                        }
+                        else
+                        {
+                            times[day.Day - 1] = 1;
+                            Late++;
+                        };
+                        Nb0fWork[day.Day - 1]++;
+                    }
+                }
+
+             }
+                //dayoff
+                if (currMonth == month)
+            {
+                // dayoff = Date.Day - Early - Late;
+                for (int i = 0; i < now.Day; i++)
+                {
+                    if (times[i] == 0)
+                    {
+                        dayoff++;
+                        times[i] = 4;
+                    }
+
+                }
+            }
+            else
+            {
+                for (int i = 0; i < sizeMonth; i++)
+                {
+                    if (times[i] == 0)
+                    {
+                        dayoff++;
+                        times[i] = 4;
+                    }
+                }
+            }
+            var data = new
+            {
+                times = times,
+                dayoff = dayoff,
+                early = Early,
+                late = Late,
+                year = year,
+                month = month,
+                nbOfWork = Nb0fWork,
+                size= FullTk.Count()
+
+            };
+            serviceResult.data = data;
+            return serviceResult;
+        }
+
         public ServiceResult GetByWeekAll()
         {
             var serviceResult = new ServiceResult();
@@ -153,7 +265,7 @@ namespace HrmCore.Services
             Calendar calendar = CultureInfo.InvariantCulture.Calendar;
             int currentWeek = calendar.GetWeekOfYear(now, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
             var tmp = string.Empty;
-            var tkAll = JobRepository.GetByFilterPaging(tmp,1000,1,tmp,tmp,now.Year,0,0);
+            var tkAll = JobRepository.GetByFilterPaging(tmp,0,1,tmp,tmp,now.Year,0,0);
             int[] result = new int[7];
            // int cnt = 0;
             foreach(TimeKeeping tk in tkAll)
@@ -184,7 +296,7 @@ namespace HrmCore.Services
             Calendar calendar = CultureInfo.InvariantCulture.Calendar;
            // int currentWeek = calendar.GetWeekOfYear(now, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
             var tmp = string.Empty;
-            var tkAll = JobRepository.GetByFilterPaging(tmp, 1000, 1, tmp, tmp, year, 0, 0);
+            var tkAll = JobRepository.GetByFilterPaging(tmp, 0, 1, tmp, tmp, year, 0, 0);
 
             int[] result = new int[7];
             int[] late = new int[7];
@@ -231,7 +343,7 @@ namespace HrmCore.Services
         {
             var serviceResult = new ServiceResult();
             var tmp = string.Empty;
-            var tkAll = JobRepository.GetByFilterPaging(tmp, 2000, 1, tmp, tmp, year, 0, 0);
+            var tkAll = JobRepository.GetByFilterPaging(tmp, 0, 1, tmp, tmp, year, 0, 0);
             int[] result = new int[12];
             int[] late = new int[12];
             foreach (TimeKeeping tk in tkAll)

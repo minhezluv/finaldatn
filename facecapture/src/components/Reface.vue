@@ -118,13 +118,14 @@ export default {
             formData.append("image", blob, "capture.jpg");
             try {
               const res = await axios.post(
-                "https://t5chcqeshd.execute-api.ap-southeast-1.amazonaws.com/Prod/api/TimeKeeping/ReFace",
+                "http://hrm3-env.eba-qghius76.ap-southeast-1.elasticbeanstalk.com/api/TimeKeeping/ReFace",
                 formData
               );
               board["Mã nhân viên"] = res.data.data;
               console.log(res.data);
             } catch (error) {
               console.error(error.message);
+              board["Mã nhân viên"] = "";
             }
           }, "image/jpeg");
         }

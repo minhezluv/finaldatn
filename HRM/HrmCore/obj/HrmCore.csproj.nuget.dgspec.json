@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\20221\\datn\\HRM\\HrmCore\\HrmCore.csproj": {}
+    "E:\\20221\\New folder\\HRM\\HrmCore\\HrmCore.csproj": {}
   },
   "projects": {
-    "E:\\20221\\datn\\HRM\\HrmCore\\HrmCore.csproj": {
+    "E:\\20221\\New folder\\HRM\\HrmCore\\HrmCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\20221\\datn\\HRM\\HrmCore\\HrmCore.csproj",
+        "projectUniqueName": "E:\\20221\\New folder\\HRM\\HrmCore\\HrmCore.csproj",
         "projectName": "HrmCore",
-        "projectPath": "E:\\20221\\datn\\HRM\\HrmCore\\HrmCore.csproj",
+        "projectPath": "E:\\20221\\New folder\\HRM\\HrmCore\\HrmCore.csproj",
         "packagesPath": "C:\\Users\\minhn\\.nuget\\packages\\",
-        "outputPath": "E:\\20221\\datn\\HRM\\HrmCore\\obj\\",
+        "outputPath": "E:\\20221\\New folder\\HRM\\HrmCore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\minhn\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,14 +40,6 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "AWSSDK.Lambda": {
-              "target": "Package",
-              "version": "[3.7.105.4, )"
-            },
-            "Amazon.Lambda.AspNetCoreServer": {
-              "target": "Package",
-              "version": "[8.0.0, )"
-            },
             "Dapper": {
               "target": "Package",
               "version": "[2.0.123, )"
@@ -58,11 +50,11 @@
             },
             "EPPlus": {
               "target": "Package",
-              "version": "[6.1.0, )"
+              "version": "[6.1.3, )"
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
-              "version": "[6.0.1, )"
+              "version": "[7.0.0, )"
             },
             "OpenCvSharp4": {
               "target": "Package",
@@ -71,6 +63,10 @@
             "OpenCvSharp4.runtime.win": {
               "target": "Package",
               "version": "[4.7.0.20230115, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
             }
           },
           "imports": [
@@ -89,12 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
-        }
-      },
-      "runtimes": {
-        "linux-x64": {
-          "#import": []
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.406\\RuntimeIdentifierGraph.json"
         }
       }
     }

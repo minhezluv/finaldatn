@@ -15,7 +15,7 @@ namespace HrmCore.Interfaces.IRepositories
         InfoPage GetInfoPage(string LCFilter, Int32 pageSize, Int32 pageIndex, string departmentID, string positionID, int Status, int TypeLaborContractID);
         bool CheckLCCodeExists(string lcCode, string lcID);
         String GetLastLCCode();
-
+        int activeStaff(Guid staffID);
         public int InsertLC(LaborContract LC);
     }
 }

@@ -255,6 +255,7 @@ import Resource from "../../js/common/Resource";
 import Enumeration from "../../js/common/Enumeration";
 import CommonFn from "../../js/common/CommonFn";
 import EmployeesAPI from "../../api/components/employees/EmployeesAPI";
+//import { lchmod } from "fs";
 //import EmployeeAPI from "../../api/components/employees/EmployeesAPI.js"
 function initState(show) {
   return {
@@ -398,6 +399,7 @@ function initState(show) {
       ],
       defaultValue: 0,
     },
+    checkStaff: true,
     showForm: show,
     showConfirmPopup: false,
     showErrorPopup: false,
@@ -590,6 +592,7 @@ export default {
      * Hàm thêm và thoát form
      */
     async saveAndOut() {
+      console.log("staffID2: ", this.Laborcontract.staffID);
       await this.saveData();
 
       //Nếu thêm thành công
@@ -664,7 +667,9 @@ export default {
     async saveData() {
       //Biến đánh dấu để hiện popup
       this.saveValidate = true;
-
+      console.log("staffID2: ", this.Laborcontract.staffID);
+      this.checkActiveStaff(this.Laborcontract.staffID);
+      console.log("check: ", this.checkStaff);
       //Trước khi lưu cần validate hết
       await this.validateAll();
 
@@ -723,7 +728,20 @@ export default {
         }
       }
     },
-
+    async checkActiveStaff() {
+      await LaborcontractsAPI.checkActiveStaff(this.Laborcontract.staffID)
+        .then((response) => {
+          console.log("check: ", response);
+          if (response.data == true) {
+            this.checkStaff = false;
+          } else {
+            this.checkStaff = true;
+          }
+        })
+        .catch(() => {
+          console.log("hi");
+        });
+    },
     /**
      * Hàm validate tất cả dữ liệu trước khi thêm
      */
@@ -745,7 +763,6 @@ export default {
         "LaborcontractCode",
         this.Laborcontract.laborContractCode
       );
-
       if (!this.allUniue) {
         let errorMessage = CommonFn.getUniqueErrorMsg(
           "Mã hợp đồng <" + this.Laborcontract.laborContractCode + ">"

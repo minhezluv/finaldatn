@@ -93,12 +93,44 @@ namespace HRM.Controllers
             }
         }
         [EnableCors("AllowCROSPolicy")]
+        [HttpGet("CheckActiveStaff")]
+        public IActionResult CheckActiveStaff(Guid staffID)
+        {
+            try
+            {
+                ServiceResult serviceResult = new ServiceResult();
+                bool check = this.JobService.checkActiveStaff(staffID);
+                if (check)
+                {
+                   serviceResult.data = true;
+                    return StatusCode(200, serviceResult.data);
+                }
+                else
+                {
+                    serviceResult.data = false;
+                    return StatusCode(200, serviceResult.data);
+                }
+            }
+            catch (Exception e)
+            {
+
+                var errObj = new
+                {
+                    devMsg = e.Message,
+                    userMsg = "không thể kết nối server",
+                };
+
+                return StatusCode(500, errObj);
+            }
+        }
+        [EnableCors("AllowCROSPolicy")]
         [HttpGet("CheckStaffCodeExists/{lcCode}/{lcID}")]
         public IActionResult CheckLCCodeExists(string lcCode, string lcID)
         {
             try
             {
                 var serviceResult = this.JobService.CheckLCCodeExists(lcCode, lcID);
+
                 if (!serviceResult.success)
                 {
                     var errObj = new
@@ -109,6 +141,7 @@ namespace HRM.Controllers
 
                     return BadRequest(errObj);
                 }
+               
 
                 return StatusCode(200, serviceResult.data);
             }

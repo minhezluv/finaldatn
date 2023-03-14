@@ -497,24 +497,7 @@ export default {
       await Object.assign(this.$data, initState(false));
       this.showForm = true;
 
-      // //Lấy department để bind lên combobox
-      // await DepartmentAPI.getAll()
-      //   .then((response) => {
-      //     console.log("department: ", response.data);
-      //     response.data.map((department) => {
-      //       this.departmentComboBox.displayValues.push(
-      //         department.departmentName
-      //       );
-      //       console.log(this.departmentComboBox);
-      //       this.departmentComboBox.keys.push(department.departmentId);
-      //     });
-      //   })
-      //   .catch(() => {
-      //     //Nếu không lấy được phòng ban
-      //     this.allInputValid = false;
-      //     this.errorMessage = Resource.Message.GetDepartmentError;
-      //     this.showErrorPopup = true;
-      //   });
+      
       console.log("hihihi: ", this.employee);
       //Nếu là form sửa
       if (guid.length > 0) {
@@ -687,30 +670,6 @@ export default {
      * Hàm Lưu dữ liệu
      */
     async saveData() {
-      // this.employee = {
-      //   guid: "1414189e-3fe7-4ffa-29e2-6211d310be16",
-      //   staffCode: "nv-12",
-      //   staffName: "Milagro1973",
-      //   dateOfBirth: "1985-11-16T00:00:00",
-      //   gender: -1655615438,
-      //   homeTown: "QTPA20G53D4G24SC8YV7B4Y63",
-      //   // ethnic: "Kyrgyz",
-      //   // religion: "T7I5P26AY9IF55D722G4WSFLY2BS72240O5YEW8G52555TD0C85591Z7",
-      //   // nationality: "Oriya",
-      //   address: "2053 Rose Hill Ln, Bismarck, North Dakota, 84830",
-      //   phoneNumber: "(466) 101-1420",
-      //   email: "Anders@nowhere.com",
-      //   identityCard: "91310",
-      //   idCardPlace: "81957",
-      //   // startDate: "1991-08-19T00:00:00",
-      //   // endDate: "2003-07-18T00:00:00",
-      //   // note: "U173FQ3F5LFCK7T13AY36LU2",
-      //   createdDate: "1974-01-14T00:00:00",
-      //   modifiedDate: "2017-01-29T00:00:00",
-      // };
-      // const date = new Date();
-      // this.employee.createdDate = date.toString();
-      // this.employee.modifiedDate = date.toString();
       console.log(this.employee);
       //Biến đánh dấu để hiện popup
       this.saveValidate = true;

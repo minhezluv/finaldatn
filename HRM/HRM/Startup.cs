@@ -29,7 +29,10 @@ namespace HRM
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
+
         {
+           
+
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowCROSPolicy",
@@ -80,6 +83,9 @@ namespace HRM
             // TIÊM: XỬ LÝ DI: for service and repository interface of entity Insurance
             services.AddScoped<IInsuranceService, InsuranceService>();
             services.AddScoped<IInsuranceRepository, InsuranceRepository>();
+            // TIÊM: XỬ LÝ DI: for service and repository interface of entity Account
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

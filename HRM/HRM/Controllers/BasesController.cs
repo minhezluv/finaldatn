@@ -76,8 +76,8 @@ namespace HRM.Controllers
 				return HandleException(ex);
 			};
 		}
-
-		[HttpGet("{EntityId}")]
+        [EnableCors("AllowCROSPolicy")]
+        [HttpGet("{EntityId}")]
 		public IActionResult GetById(Guid EntityId)
 		{
 			try

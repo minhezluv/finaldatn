@@ -26,8 +26,8 @@ namespace HRM.Controllers
         {
             JobService = mJobService;
             jobRepository = mjobRepository;
-            _trainingDataPath = Path.Combine(AppContext.BaseDirectory, "trainingdata");
-            Console.WriteLine(AppContext.BaseDirectory);
+            _trainingDataPath = "C:\\trainingData\\trainingdata";
+            //  Console.WriteLine(AppContext.BaseDirectory);
             _faceRecognizer = LBPHFaceRecognizer.Create();
         }
 
@@ -185,13 +185,32 @@ namespace HRM.Controllers
             }
         }
         [EnableCors("AllowCROSPolicy")]
+        [HttpGet("GetByMonthOption")]
+        public IActionResult GetByMonthOption(int year, int month, string departmentID, string positionID, string staffCode)
+        {
+            try {
+                var serviceResult = JobService.GetByMonthOption(year,month,departmentID,positionID,staffCode);
+                return StatusCode(200, serviceResult);
+            }
+            catch(Exception e)
+            {
+                var errObj = new
+                {
+                    devMsg = e.Message,
+                    userMsg = "Lỗi",
+                };
+
+                return StatusCode(500, errObj);
+            }
+        }
+        [EnableCors("AllowCROSPolicy")]
         [HttpPost("ReFace")]
         public async Task<IActionResult> Recognize(IFormFile image)
 
         {
             try
             {
-                _faceRecognizer.Read("trainedModel.xml");
+                _faceRecognizer.Read(_trainingDataPath + @"\trainedModel.xml");
                 if (image == null)
                 {
                     return BadRequest("Image is required.");
@@ -205,7 +224,7 @@ namespace HRM.Controllers
                     var imageData = memoryStream.ToArray();
                     using (var mat = Cv2.ImDecode(imageData, ImreadModes.Grayscale))
                     {
-                        OpenCvSharp.CascadeClassifier faceClassifier = new CascadeClassifier("haarcascade_frontalface_default.xml");
+                        OpenCvSharp.CascadeClassifier faceClassifier = new CascadeClassifier(_trainingDataPath + @"\haarcascade_frontalface_default.xml");
                         //      Rect[] faces = faceClassifier.DetectMultiScale(grayImage, 1.1, 3, HaarDetectionType.ScaleImage, new Size(20, 20));
                         //Cv2.CvtColor(mat, mat, ColorConversionCodes.BGR2GRAY);
                         Rect[] faces = faceClassifier.DetectMultiScale(mat, 1.1, 5, (HaarDetectionTypes)1, new OpenCvSharp.Size(100, 100));
@@ -282,8 +301,8 @@ namespace HRM.Controllers
                             TimeKeeping tk = new TimeKeeping();
                             tk.guid = Guid.NewGuid();
                             tk.StaffID = staffID;
-                            tk.Start = DateTime.Today;
-                            tk.End = DateTime.Today;
+                            tk.Start = now;
+                            tk.End = now;
                             try
                             {
                                 JobService.Insert(tk);

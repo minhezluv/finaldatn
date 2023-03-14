@@ -43,7 +43,11 @@ class LaborContractsAPI extends BaseAPI {
 
     return BaseAPIConfig.get(`${queryString}`);
   }
-
+  checkActiveStaff(guid) {
+    // https://localhost:44384/api/LaborContract/
+    let queryString = `${this.controller}/CheckActiveStaff?staffID=${guid}`;
+    return BaseAPIConfig.get(`${queryString}`);
+  }
   /**
    * Hàm lấy mã nhân viên mới
    * @returns

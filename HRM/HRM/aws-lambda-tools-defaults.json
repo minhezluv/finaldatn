@@ -1,8 +1,0 @@
-
-{
-    "region" : "ap-southeast-1",
-    "profile" : "minh",
-    "s3-bucket" : "hrmbackend",
-    "template"  : "serverless.template",
-    "stack-name" : "hrmapi2"
-}

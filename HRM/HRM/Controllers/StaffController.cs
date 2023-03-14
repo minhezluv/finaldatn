@@ -39,15 +39,16 @@ namespace HRM.Controllers
         {
             StaffService = mStaffService;
             staffRepository = mstaffRepository;
-            _trainingDataPath = Path.Combine(AppContext.BaseDirectory, "trainingdata");
-            Console.WriteLine(AppContext.BaseDirectory);
+            _trainingDataPath = "C:\\trainingData\\trainingdata";
+          //  Console.WriteLine(AppContext.BaseDirectory);
             _faceRecognizer = LBPHFaceRecognizer.Create();
-           // LoadTrainingData();
+            // LoadTrainingData();
 
 
 
         }
         #region methods
+        [EnableCors("AllowCROSPolicy")]
         [HttpGet("Export")]
         public IActionResult Export(CancellationToken cancellationToken, [FromQuery] string filterValue)
         {
@@ -113,11 +114,11 @@ namespace HRM.Controllers
 
         [EnableCors("AllowCROSPolicy")]
         [HttpGet("Filter")]
-        public IActionResult GetByFilterPaging([FromQuery] string employeeFilter, [FromQuery] int pageSize, [FromQuery] int pageIndex, [FromQuery] string departmentID, [FromQuery] string positionID,int status)
+        public IActionResult GetByFilterPaging([FromQuery] string employeeFilter, [FromQuery] int pageSize, [FromQuery] int pageIndex, [FromQuery] string departmentID, [FromQuery] string positionID, int status)
         {
             try
             {
-                var serviceResult = StaffService.GetByFilterPaging(employeeFilter, pageSize, pageIndex, departmentID, positionID,status);
+                var serviceResult = StaffService.GetByFilterPaging(employeeFilter, pageSize, pageIndex, departmentID, positionID, status);
 
 
                 return StatusCode(200, serviceResult.data);
@@ -129,7 +130,7 @@ namespace HRM.Controllers
                 var errObj = new
                 {
                     devMsg = e.Message,
-                   
+
                 };
 
                 return StatusCode(500, errObj);
@@ -138,11 +139,11 @@ namespace HRM.Controllers
 
         [EnableCors("AllowCROSPolicy")]
         [HttpGet("InfoPage")]
-        public IActionResult GetInfoPage([FromQuery] string employeeFilter, [FromQuery] int pageSize, [FromQuery] int pageIndex, [FromQuery] string departmentID, [FromQuery] string positionID,int status)
+        public IActionResult GetInfoPage([FromQuery] string employeeFilter, [FromQuery] int pageSize, [FromQuery] int pageIndex, [FromQuery] string departmentID, [FromQuery] string positionID, int status)
         {
             try
             {
-                var serviceResult = StaffService.GetInfoPage(employeeFilter, pageSize, pageIndex, departmentID, positionID,status);
+                var serviceResult = StaffService.GetInfoPage(employeeFilter, pageSize, pageIndex, departmentID, positionID, status);
 
 
                 return StatusCode(200, serviceResult.data);
@@ -187,7 +188,7 @@ namespace HRM.Controllers
             }
 
         }
-
+        [EnableCors("AllowCROSPolicy")]
         [HttpGet("LastStaffCode")]
         public IActionResult GetLastStaffCode()
         {
@@ -390,7 +391,7 @@ namespace HRM.Controllers
         {
             try
             {
-                _faceRecognizer.Read("trainedModel.xml");
+                _faceRecognizer.Read(_trainingDataPath + @"\trainedModel.xml");
                 if (image == null)
                 {
                     return BadRequest("Image is required.");
@@ -404,7 +405,7 @@ namespace HRM.Controllers
                     var imageData = memoryStream.ToArray();
                     using (var mat = Cv2.ImDecode(imageData, ImreadModes.Grayscale))
                     {
-                        OpenCvSharp.CascadeClassifier faceClassifier = new CascadeClassifier("haarcascade_frontalface_default.xml");
+                        OpenCvSharp.CascadeClassifier faceClassifier = new CascadeClassifier(_trainingDataPath+@"\haarcascade_frontalface_default.xml");
                         //      Rect[] faces = faceClassifier.DetectMultiScale(grayImage, 1.1, 3, HaarDetectionType.ScaleImage, new Size(20, 20));
                         //Cv2.CvtColor(mat, mat, ColorConversionCodes.BGR2GRAY);
                         Rect[] faces = faceClassifier.DetectMultiScale(mat, 1.1, 5, (HaarDetectionTypes)1, new OpenCvSharp.Size(100, 100));
@@ -462,13 +463,13 @@ namespace HRM.Controllers
                         }
                     }
                 }
-                }
+            }
             catch
             {
                 return BadRequest();
             }
-          
-            
+
+
         }
 
         [EnableCors("AllowCROSPolicy")]
@@ -493,7 +494,7 @@ namespace HRM.Controllers
             //}
 
             //return Ok();
-            for(int i = 0; i< images.Count(); i++)
+            for (int i = 0; i < images.Count(); i++)
 
             {
                 IFormFile image = images[i];
@@ -514,22 +515,17 @@ namespace HRM.Controllers
                         // Create the directory
                         Directory.CreateDirectory(path);
                     }
-                    var subimgpath = Path.Combine(path,(i+1).ToString());
+                    var subimgpath = Path.Combine(path, (i + 1).ToString());
                     //LoadTrainingData();
                     image.CopyTo(memoryStream);
                     var imageData = memoryStream.ToArray();
                     using (var mat = Cv2.ImDecode(imageData, ImreadModes.Grayscale))
                     {
 
-                        OpenCvSharp.CascadeClassifier faceClassifier = new CascadeClassifier("haarcascade_frontalface_default.xml");
+                        OpenCvSharp.CascadeClassifier faceClassifier = new CascadeClassifier(_trainingDataPath+@"\haarcascade_frontalface_default.xml");
                         //      Rect[] faces = faceClassifier.DetectMultiScale(grayImage, 1.1, 3, HaarDetectionType.ScaleImage, new Size(20, 20));
                         Rect[] faces = faceClassifier.DetectMultiScale(mat, 1.1, 3, (HaarDetectionTypes)1, new OpenCvSharp.Size(100, 100));
                         var face = faces.First();
-
-                        //Mat srcContinous = new Mat();
-                        //mat.Clone().ConvertTo(srcContinous, MatType.CV_32FC1);
-                        //// mat = srcContinous;
-                        //Mat faceImage = new Mat(srcContinous, face);
                         Mat faceImage = new Mat(mat, face);
                         OpenCvSharp.Size size = new OpenCvSharp.Size(100, 100);
                         Mat resizedImg = new Mat();
@@ -543,10 +539,10 @@ namespace HRM.Controllers
                             faceImage = temp;
                         }
                         Cv2.ImWrite(subimgpath + ".jpg", faceImage);
-                       
+
                     }
                 }
-                }
+            }
 
             LoadTrainingData();
             return Ok(code);
@@ -602,14 +598,14 @@ namespace HRM.Controllers
                 for (var j = 0; j < subimg.Length; j++)
                 {
                     faceImages[cnt] = Cv2.ImRead(images[cnt]);
-                    faceLabels[cnt] = i ;
+                    faceLabels[cnt] = i;
                     Cv2.CvtColor(faceImages[cnt], faceImages[cnt], ColorConversionCodes.BGR2GRAY);
                     cnt++;
                 }
             }
 
             _faceRecognizer.Train(faceImages, faceLabels);
-            _faceRecognizer.Save("trainedModel.xml");
+            _faceRecognizer.Save(_trainingDataPath+@"\trainedModel.xml");
             //var dd= _faceRecognizer.GetLabelsByString();
             //var sdas = "00";
         }

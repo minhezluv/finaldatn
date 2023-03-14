@@ -17,7 +17,7 @@ namespace HrmCore.Interfaces.IServices
         ServiceResult GetInfoPage(string lcFilter, Int32 pageSize, Int32 pageIndex, string departmentID, string positionID);
         ServiceResult CheckLCCodeExists(string staffCode, string staffID);
         ServiceResult GetLastLCCode();
-
+        bool checkActiveStaff(Guid staffID);
         ServiceResult InsertLC(LaborContract LC);
     }
 }

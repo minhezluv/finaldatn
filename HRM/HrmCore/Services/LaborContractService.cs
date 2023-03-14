@@ -1,4 +1,7 @@
-﻿using HrmCore.Entities;
+﻿using DocumentFormat.OpenXml.Drawing.Charts;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
+using HrmCore.Entities;
 using HrmCore.Interfaces.IRepositories;
 using HrmCore.Interfaces.IServices;
 using System;
@@ -8,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static OpenCvSharp.Stitcher;
 
 namespace HrmCore.Services
 {
@@ -17,9 +21,19 @@ namespace HrmCore.Services
 		#region props and constructor
 		ILaborContractRepository JobRepository;
 		public LaborContractService(ILaborContractRepository mJobRepository) : base(mJobRepository)
-		{
-			JobRepository = mJobRepository;
-		}
+        {
+            JobRepository = mJobRepository;
+        }
+        public bool checkActiveStaff(Guid staffID)
+        {
+            var LC = this.JobRepository.activeStaff(staffID);
+            if (LC > 0)
+            {
+                return true;
+            }
+            return false;
+          
+        }
 
         public ServiceResult CheckLCCodeExists(string lcCode, string lcID)
         {

@@ -66,7 +66,7 @@ export default {
       while (n--) {
         u8arr[n] = bstr.charCodeAt(n);
       }
-      return new File([u8arr], "capture.jpg", { type: mime });
+      return new File([u8arr], "capture.jpeg", { type: mime });
     },
     async uploadImages() {
       try {
@@ -79,13 +79,15 @@ export default {
           );
         });
         await axios.post(
-          `https://t5chcqeshd.execute-api.ap-southeast-1.amazonaws.com/Prod/api/Staff/UpFace?code=${this.code}`,
+          `http://hrm3-env.eba-qghius76.ap-southeast-1.elasticbeanstalk.com/api/Staff/UpFace?code=${this.code}`,
+          //  `https://localhost:44384/api/Staff/UpFace?code=${this.code}/`,
           formData,
           {
             headers: {
-              "Content-Type": "multipart/form-data",
+              "Content-Type": "image/jpeg",
             },
-          }
+          },
+          { timeout: 5000 }
         );
         this.images = [];
         this.showPopup("Upload Success!");
@@ -93,6 +95,7 @@ export default {
         console.error(error);
         this.showPopup("Upload Error!");
       } finally {
+        this.images = [];
         this.capturing = false;
       }
     },

@@ -20,7 +20,6 @@ namespace HrmCore.Attributes
     /// <summary>
     /// Thuộc tính được xuất file excel
     /// </summary>
-    /// CreatedBy: NHHoang (27/8/2021)
     public class PropExport : Attribute
     {
         public readonly string Name;

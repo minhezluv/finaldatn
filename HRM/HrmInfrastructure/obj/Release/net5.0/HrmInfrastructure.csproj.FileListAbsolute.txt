@@ -1,0 +1,15 @@
+E:\20221\New folder\HRM\HrmInfrastructure\bin\Release\net5.0\HrmInfrastructure.deps.json
+E:\20221\New folder\HRM\HrmInfrastructure\bin\Release\net5.0\HrmInfrastructure.dll
+E:\20221\New folder\HRM\HrmInfrastructure\bin\Release\net5.0\HrmInfrastructure.pdb
+E:\20221\New folder\HRM\HrmInfrastructure\bin\Release\net5.0\HrmCore.dll
+E:\20221\New folder\HRM\HrmInfrastructure\bin\Release\net5.0\HrmCore.pdb
+E:\20221\New folder\HRM\HrmInfrastructure\obj\Release\net5.0\HrmInfrastructure.csproj.AssemblyReference.cache
+E:\20221\New folder\HRM\HrmInfrastructure\obj\Release\net5.0\HrmInfrastructure.GeneratedMSBuildEditorConfig.editorconfig
+E:\20221\New folder\HRM\HrmInfrastructure\obj\Release\net5.0\HrmInfrastructure.AssemblyInfoInputs.cache
+E:\20221\New folder\HRM\HrmInfrastructure\obj\Release\net5.0\HrmInfrastructure.AssemblyInfo.cs
+E:\20221\New folder\HRM\HrmInfrastructure\obj\Release\net5.0\HrmInfrastructure.csproj.CoreCompileInputs.cache
+E:\20221\New folder\HRM\HrmInfrastructure\obj\Release\net5.0\HrmInfrastructure.csproj.CopyComplete
+E:\20221\New folder\HRM\HrmInfrastructure\obj\Release\net5.0\HrmInfrastructure.dll
+E:\20221\New folder\HRM\HrmInfrastructure\obj\Release\net5.0\refint\HrmInfrastructure.dll
+E:\20221\New folder\HRM\HrmInfrastructure\obj\Release\net5.0\HrmInfrastructure.pdb
+E:\20221\New folder\HRM\HrmInfrastructure\obj\Release\net5.0\ref\HrmInfrastructure.dll

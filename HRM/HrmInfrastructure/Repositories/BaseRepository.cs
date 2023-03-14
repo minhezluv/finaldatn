@@ -27,8 +27,8 @@ namespace HrmInfrastructure.Repositories
             tableName = typeof(Entity).Name.ToLower();
             // Create connection:
             connString = config.GetConnectionString("ConnectionString1");
-            _dbConnection = new MySqlConnection(connString);
-            _dbConnection.Open();
+           _dbConnection = new MySqlConnection(connString);
+          //  _dbConnection.Open();
             conn = new MySqlConnection(connString);
         }
         #endregion
@@ -38,21 +38,26 @@ namespace HrmInfrastructure.Repositories
             var dparams = new DynamicParameters();
             dparams.Add($"@{tableName}ID", EntityCode);
             var duplicateCode = conn.QueryFirstOrDefault<string>(sqlCmd, dparams);
+            conn.Close();
             return (string.IsNullOrEmpty(duplicateCode));
         }
 
         public int Delete(Guid EntityId)
         {
             string sqlCmd = $"DELETE FROM {tableName} WHERE guid = @guid";
-            DynamicParameters dparams = new DynamicParameters();
+            DynamicParameters dparams = new();
             dparams.Add($"@guid", EntityId);
-            return conn.Execute(sqlCmd, dparams);
+            int res = conn.Execute(sqlCmd, dparams);
+            conn.Close ();
+            return res;
         }
 
         public List<Entity> GetAll()
         {
             var sqlCmd = $"SELECT * FROM {tableName}";
-            return conn.Query<Entity>(sqlCmd).ToList();
+            var listentities = conn.Query<Entity>(sqlCmd).ToList();
+            conn.Close();
+            return listentities;
         }
 
         public Entity GetById(Guid EntityId)
@@ -60,7 +65,9 @@ namespace HrmInfrastructure.Repositories
             string sqlCmd = $"SELECT * FROM {tableName} WHERE guid = @guid";
             var dparams = new DynamicParameters();
             dparams.Add($"@guid", EntityId.ToString());
-            return conn.QueryFirstOrDefault<Entity>(sqlCmd, dparams);
+            Entity res = conn.QueryFirstOrDefault<Entity>(sqlCmd, dparams);
+            conn.Close();
+            return res;
         }
 
         public int Insert(Entity entity)
@@ -81,7 +88,9 @@ namespace HrmInfrastructure.Repositories
             sqlCols = sqlCols.Substring(0, sqlCols.Length - 1);
             sqlDParams = sqlDParams.Substring(0, sqlDParams.Length - 1);
             var sqlCmd = $"INSERT INTO {tableName} ({sqlCols}) VALUES({sqlDParams})";
-            return conn.Execute(sqlCmd, dparams);
+            var res = conn.Execute(sqlCmd, dparams);
+            conn.Close();
+            return res;
         }
 
         public int Update(Guid EntityId, Entity entity)
@@ -99,13 +108,15 @@ namespace HrmInfrastructure.Repositories
             }
             col_param = col_param.Substring(0, col_param.Length - 1);
             var sqlCmd = $"UPDATE {tableName} SET {col_param} WHERE guid = @guid";
-            return conn.Execute(sqlCmd, dparams);
+            var res = conn.Execute(sqlCmd, dparams);
+            conn.Close();
+            return res;
         }
 
         public int MultiDeleteEntity(IEnumerable<Guid> listId)
         {
             int rowAffects = 0;
-
+            _dbConnection.Open();
             using (var transaction = _dbConnection.BeginTransaction())
             {
                 try
@@ -127,7 +138,7 @@ namespace HrmInfrastructure.Repositories
                     transaction.Rollback();
                 }
             }
-
+            _dbConnection.Close();
             return rowAffects;
         }
 
@@ -137,7 +148,7 @@ namespace HrmInfrastructure.Repositories
 
             string query = $"select * FROM {tableName} where {propName} = '{propvalue}'";
             var entitySearch = _dbConnection.QueryFirstOrDefault<Entity>(query);
-
+            _dbConnection.Close();
             return entitySearch;
         }
 
@@ -148,7 +159,7 @@ namespace HrmInfrastructure.Repositories
 
             //Lấy entity
             var entitySearch = _dbConnection.QueryFirstOrDefault<Entity>(query);
-
+            _dbConnection.Close();
             return entitySearch;
         }
     }

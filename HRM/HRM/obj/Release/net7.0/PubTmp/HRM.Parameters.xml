@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="HRM20230308143651" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^E:\\20221\\New\ folder\\HRM\\HRM\\obj\\Release\\net7\.0\\PubTmp\\Out\\$" />
+  </parameter>
+</parameters>

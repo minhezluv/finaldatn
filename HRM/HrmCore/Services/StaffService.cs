@@ -20,9 +20,11 @@ namespace HrmCore.Services
     {
 		#region props and constructor
 		IStaffRepository StaffRepository;
-		public StaffService(IStaffRepository mJobRepository) : base(mJobRepository)
+        IAccountRepository AccountRepository;
+		public StaffService(IStaffRepository mJobRepository,IAccountRepository mAccountRepository) : base(mJobRepository)
 		{
 			StaffRepository = mJobRepository;
+            AccountRepository = mAccountRepository;
 		}
 
         public ServiceResult CheckEmployeeCodeExists(string staffCode, string staffID)
@@ -303,7 +305,18 @@ namespace HrmCore.Services
             int rowAffect = 0;
             try
             {
+                staff.guid = Guid.NewGuid();
                rowAffect =  this.StaffRepository.InsertStaff(staff);
+                if (rowAffect > 0) {
+                Account account= new Account();
+                    
+                    account.StaffID = staff.guid;
+                    account.Username = staff.StaffCode;
+                    account.Password = staff.PhoneNumber;
+                    account.RoleID = "1";
+                    rowAffect = this.AccountRepository.insertAccount(account);
+                }
+                
                 serviceResult.data = rowAffect;
                 serviceResult.success = true;
             }

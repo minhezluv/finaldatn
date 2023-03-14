@@ -1,4 +1,8 @@
 ﻿using Dapper;
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Presentation;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 using HrmCore.Entities;
 using HrmCore.Interfaces.IRepositories;
 using Microsoft.Extensions.Configuration;
@@ -26,9 +30,9 @@ namespace HrmInfrastructure.Repositories
             parameters.Add("@PageIndex", pageIndex);
             parameters.Add("@DepartmentID", departmentID == "" ? null : departmentID);
             parameters.Add("@PositionID", positionName == "" ? null : positionName);
-            parameters.Add("@Day", Day );
-            parameters.Add("@Month", Month);
-            parameters.Add("@Year", Year);
+            parameters.Add("@Day", Day == 0 ? null : Day);
+            parameters.Add("@Month", Month ==0 ? null : Month);
+            parameters.Add("@Year", Year == 0 ? null : Year);
             parameters.Add("@TotalRecord", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
 
@@ -36,7 +40,9 @@ namespace HrmInfrastructure.Repositories
             {
                 var timeKeepings = dbConnection.Query<FullTimeKeeping>("Proc_GetTKFilterPaging", param: parameters, commandType: CommandType.StoredProcedure);
                 var data = new InfoPage() { TotalPage = 0, TotalRecord = parameters.Get<Int32>("@TotalRecord") };
+                dbConnection.Close();
                 return (List<FullTimeKeeping>) timeKeepings;
+               
             }
         }
 
@@ -53,7 +59,7 @@ namespace HrmInfrastructure.Repositories
 
             var parameters = new DynamicParameters();
             parameters.Add("@StaffFilter",null);
-            parameters.Add("@PageSize", 10000);
+            parameters.Add("@PageSize", 0);
             parameters.Add("@PageIndex", 1);
             parameters.Add("@DepartmentID", null);
             parameters.Add("@PositionID",null);
@@ -74,8 +80,44 @@ namespace HrmInfrastructure.Repositories
                         _tkList.Add(tk);
                     }
                 }
+                dbConnection.Close();
                 return (List<FullTimeKeeping>)_tkList;
             }
+        }
+
+        public List<FullTimeKeeping> GetByMonthOption(int year, int month, string departmentID, string positionID, string staffID)
+        {
+            //string staffFilter = string.Empty;
+            //if (staffID.Length > 0 || staffID ==null)
+            //{
+            //    //string sqlCmd = $"SELECT * FROM Staff WHERE Guid = @guid";
+            //    //var dparams = new DynamicParameters();
+            //    //dparams.Add($"@guid", staffID);
+
+            //    //Staff _tk = conn.QueryFirstOrDefault<Staff>(sqlCmd, dparams);
+            //    //staffFilter = _tk.StaffCode;
+            //    //conn.Close();
+            //    staffFilter =staffID;
+            //}
+            var parameters = new DynamicParameters();
+            parameters.Add("@StaffFilter", staffID == "" ? null : staffID);
+            parameters.Add("@PageSize", 0);
+            parameters.Add("@PageIndex", 1);
+            parameters.Add("@DepartmentID", departmentID == "" ? null : departmentID);
+            parameters.Add("@PositionID", positionID == "" ? null : positionID);
+            parameters.Add("@Day",null);
+            parameters.Add("@Month", month == 0 ? null : month);
+            parameters.Add("@Year", year == 0 ? null : year);
+            parameters.Add("@TotalRecord", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            using (IDbConnection dbConnection = new MySqlConnection(connString))
+            {
+                var timeKeepings = dbConnection.Query<FullTimeKeeping>("Proc_GetTKFilterPaging", param: parameters, commandType: CommandType.StoredProcedure);
+                var data = new InfoPage() { TotalPage = 0, TotalRecord = parameters.Get<Int32>("@TotalRecord") };
+                dbConnection.Close();
+                return (List<FullTimeKeeping>)timeKeepings;
+
+            }
+           
         }
 
         public Guid getIDbyStaffCode(string staffCode)
@@ -102,6 +144,7 @@ namespace HrmInfrastructure.Repositories
                 }
                 var tmp =staffs.First();
                 Guid currguid = tmp.guid;
+                dbConnection.Close();
                 return currguid;
                 //return (List<FullStaff>)staffs;
                 //if (List<FullStaff>) staffs == 0)
@@ -128,9 +171,9 @@ namespace HrmInfrastructure.Repositories
             parameters.Add("@PageIndex", pageIndex);
             parameters.Add("@DepartmentID", departmentID == "" ? null : departmentID);
             parameters.Add("@PositionID", positionName == "" ? null : positionName);
-            parameters.Add("@Day", Day );
-            parameters.Add("@Month", Month );
-            parameters.Add("@Year", Year);
+            parameters.Add("@Day", Day == 0 ? null : Day);
+            parameters.Add("@Month", Month == 0 ? null : Month);
+            parameters.Add("@Year", Year == 0 ? null : Year);
             parameters.Add("@TotalRecord", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
 
@@ -140,6 +183,7 @@ namespace HrmInfrastructure.Repositories
                 var data = new InfoPage() { TotalPage = 0, TotalRecord = parameters.Get<Int32>("@TotalRecord") };
                 data.TotalPage = (int)Math.Ceiling((float)(data.TotalRecord / pageSize) )+1;
                 //pageSize != null ? Math.Ceiling((decimal)((decimal)totalRecord / pageSize)) : 1;
+              //  dbConnection.Close();
                 return data;
             }
         }
@@ -155,6 +199,7 @@ namespace HrmInfrastructure.Repositories
             //int Year = _tk.Start.Year;
             //int Day = _tk.Start.Day;
             //DateTime _time = new DateTime(Year, Month, Day);
+            conn.Close();   
             return _tk.Start;
         }
 
@@ -163,7 +208,7 @@ namespace HrmInfrastructure.Repositories
             List<StaffTime> mStaffTime = new List<StaffTime>();
             var sqlCmd = $"SELECT * FROM TimeKeeping";
             List<TimeKeeping> timeList = conn.Query<TimeKeeping>(sqlCmd).ToList();
-            
+            conn.Close();
             return mStaffTime;
         }
 
@@ -178,6 +223,7 @@ namespace HrmInfrastructure.Repositories
                 staffTime.TimeIn.Add(timeKeeping.Start);
                 staffTime.TimeOut.Add(timeKeeping.End);
             }
+            conn.Close();
             return staffTime;
         }
 

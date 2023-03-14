@@ -22,6 +22,8 @@ namespace HrmCore.Interfaces.IServices
         public ServiceResult GetByYearAll(int year);
 
         public ServiceResult GetByWeekOption(int year, int week);
+
+        public ServiceResult GetByMonthOption(int year, int month,string departmentID,string positionID,string staffID);
         #endregion
     }
 }

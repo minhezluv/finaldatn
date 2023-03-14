@@ -15,6 +15,7 @@ E:\20221\ĐATN\HRM\HrmInfrastructure\obj\Debug\net5.0\ref\HrmInfrastructure.dll
 E:\20221\ĐATN\HRM\HrmInfrastructure\obj\Debug\net5.0\HrmInfrastructure.pdb
 E:\20221\datn\HRM\HrmInfrastructure\bin\Debug\net5.0\HrmInfrastructure.deps.json
 E:\20221\datn\HRM\HrmInfrastructure\bin\Debug\net5.0\HrmInfrastructure.dll
+E:\20221\datn\HRM\HrmInfrastructure\bin\Debug\net5.0\ref\HrmInfrastructure.dll
 E:\20221\datn\HRM\HrmInfrastructure\bin\Debug\net5.0\HrmInfrastructure.pdb
 E:\20221\datn\HRM\HrmInfrastructure\bin\Debug\net5.0\HrmCore.dll
 E:\20221\datn\HRM\HrmInfrastructure\bin\Debug\net5.0\HrmCore.pdb
@@ -27,4 +28,3 @@ E:\20221\datn\HRM\HrmInfrastructure\obj\Debug\net5.0\HrmInfrastructure.csproj.Co
 E:\20221\datn\HRM\HrmInfrastructure\obj\Debug\net5.0\HrmInfrastructure.dll
 E:\20221\datn\HRM\HrmInfrastructure\obj\Debug\net5.0\ref\HrmInfrastructure.dll
 E:\20221\datn\HRM\HrmInfrastructure\obj\Debug\net5.0\HrmInfrastructure.pdb
-E:\20221\datn\HRM\HrmInfrastructure\obj\Debug\net5.0\refint\HrmInfrastructure.dll
